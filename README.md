@@ -6,7 +6,7 @@ A Python application that converts formatted character sheet text files into sty
 
 - **Smart Parsing**: Extracts all character information from structured text files
 - **Professional Layout**: Creates beautiful, multi-section character sheets
-- **Modern Design**: Clean typography, thoughtful color scheme, and efficient space usage
+- **Modern Compact Design**: Landscape layout with tight margins, two-column flow, and minimal wasted space
 - **Batch Processing**: Convert multiple character sheets at once
 - **Customizable**: Easy to extend with additional styling or sections
 
@@ -44,6 +44,13 @@ python main.py
 ```
 
 This will process all `.txt` files in the `examples/` directory and generate corresponding PDFs in the `output/` directory.
+
+### Layout notes
+
+- Output is landscape Letter by default with compact margins (0.3").
+- The top band includes the character name, a concise descriptor line, and a compact attributes row.
+- Content flows in two columns (60/40 split) with denser spacing to reduce page count and empty areas.
+- Section headers are understated; long sections wrap and split across columns/pages cleanly.
 
 ## Character Sheet Format
 

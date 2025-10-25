@@ -24,6 +24,17 @@ class CharacterSheetParser:
             "background": {},
             "notes": {},
         }
+        # Canonical section headers in parse order for boundary detection
+        self._section_order: List[str] = [
+            "Special Abilities",
+            "Skills",
+            "Attacks",
+            "Cyphers",
+            "Equipment",
+            "Advancements",
+            "Background",
+            "Notes",
+        ]
 
     def parse(self) -> Dict[str, Any]:
         """Parse the entire character sheet."""
@@ -41,32 +52,56 @@ class CharacterSheetParser:
 
     def _parse_header(self):
         """Parse header information (name and descriptors)."""
-        if self.lines:
-            first_line = self.lines[0]
-            # Format: "Name is a Descriptor Archetype who/with Description in World"
-            match = re.match(
-                r"(\w+)\s+is\s+a\s+(.+?)(?:\s+in\s+a\s+(.+?))?$", first_line
-            )
-            if match:
-                self.data["header"]["name"] = match.group(1)
-                descriptors_text = match.group(2)
-                world = match.group(3) or "Standard"
-                self.data["header"]["world"] = world
+        # The header may span multiple physical lines (wrapping). Collect the
+        # contiguous non-empty lines from the top until we hit a horizontal
+        # ruler (---) or an empty line and join them for robust parsing.
+        if not self.lines:
+            return
 
-                # Parse descriptors
-                parts = re.split(r"\s+who\s+|\s+with\s+", descriptors_text)
-                if len(parts) > 0:
-                    self.data["header"]["type"] = parts[
-                        0
-                    ]  # e.g., "Perceptive Explorer"
-                if len(parts) > 1:
-                    self.data["header"]["focus"] = parts[
-                        1
-                    ]  # e.g., "Lives In The Wilderness"
-                if len(parts) > 2:
-                    self.data["header"]["flavor"] = parts[
-                        2
-                    ]  # e.g., "Skills And Knowledge"
+        header_lines: List[str] = []
+        for line in self.lines:
+            if not line.strip():
+                break
+            # Stop if we encounter a line that's just dashes (HR)
+            if set(line.strip()) == {"-"}:
+                break
+            header_lines.append(line.strip())
+
+        header_text = " ".join(header_lines).strip()
+        if not header_text:
+            return
+
+        # Format examples we support:
+        # "Name is a Weird Explorer who Crafts ... in a Historical world"
+        # Allow multi-word names (including punctuation like slashes) and both
+        # "is a" and "is an" forms. Be case-insensitive.
+        match = re.match(
+            r"^(.+?)\s+is\s+(?:a|an)\s+(.+?)(?:\s+in\s+(?:a|an)\s+(.+?))?$",
+            header_text,
+            flags=re.IGNORECASE,
+        )
+
+        if not match:
+            return
+
+        # Name may include slashes or multiple words; keep original casing
+        name = match.group(1).strip()
+        descriptors_text = match.group(2) or ""
+        world = match.group(3) or "Standard"
+
+        self.data["header"]["name"] = name
+        self.data["header"]["world"] = world
+
+        # Parse descriptors into type / focus / flavor by splitting on the
+        # common separators 'who' and 'with'. Use case-insensitive split.
+        parts = re.split(r"\s+who\s+|\s+with\s+", descriptors_text, flags=re.IGNORECASE)
+        parts = [p.strip() for p in parts if p and p.strip()]
+        if len(parts) > 0:
+            self.data["header"]["type"] = parts[0]
+        if len(parts) > 1:
+            self.data["header"]["focus"] = parts[1]
+        if len(parts) > 2:
+            self.data["header"]["flavor"] = parts[2]
 
     def _parse_attributes(self):
         """Parse Might, Speed, Intellect pools and related stats."""
@@ -121,29 +156,113 @@ class CharacterSheetParser:
     def _get_section_content(
         self, start_marker: str, end_marker: Optional[str] = None
     ) -> List[str]:
-        """Get content between two section markers."""
-        start_idx = None
+        """Get content of a section from its header up to (but not including) the next section header.
+
+        If end_marker is provided, stop at that explicit marker; otherwise stop at the
+        next known section header in the canonical order.
+        """
+        # Find start line where the stripped text equals start_marker
+        start_idx: Optional[int] = None
         for i, line in enumerate(self.lines):
-            if start_marker in line:
+            if line.strip().lower() == start_marker.strip().lower():
                 start_idx = i + 1
                 break
 
         if start_idx is None:
             return []
 
+        # Optionally skip a horizontal rule line right after header
+        if start_idx < len(self.lines) and self.lines[start_idx].strip().startswith(
+            "---"
+        ):
+            start_idx += 1
+
+        # Determine end index
         end_idx = len(self.lines)
         if end_marker:
+            # Stop at explicit end marker occurrence
             for i in range(start_idx, len(self.lines)):
-                if (
-                    self.lines[i].strip()
-                    and self.lines[i][0].isupper()
-                    and "---" in self.lines[i]
-                    or (i + 1 < len(self.lines) and "---" in self.lines[i + 1])
-                ):
+                if self.lines[i].strip().lower() == end_marker.strip().lower():
+                    end_idx = i
+                    break
+        else:
+            # Stop at the next known section header
+            # Determine the sequence of section headers to consider after the current one
+            lowered_order = [s.lower() for s in self._section_order]
+            try:
+                pos = lowered_order.index(start_marker.strip().lower())
+            except ValueError:
+                pos = -1
+            next_headers = (
+                set(lowered_order[pos + 1 :]) if pos != -1 else set(lowered_order)
+            )
+
+            for i in range(start_idx, len(self.lines)):
+                s = self.lines[i].strip().lower()
+                if s in next_headers:
                     end_idx = i
                     break
 
-        return [line.rstrip() for line in self.lines[start_idx:end_idx] if line.strip()]
+        # Return non-empty, rstripped lines within boundaries, skipping lone HRs
+        content: List[str] = []
+        for line in self.lines[start_idx:end_idx]:
+            t = line.rstrip()
+            if not t:
+                continue
+            # Skip lines made purely of dashes (section separators)
+            if set(t) == {"-"}:
+                continue
+            content.append(t)
+        return content
+
+    def _looks_like_subsection_header(self, line: str) -> bool:
+        """Heuristic: decide whether a non-indented line is a subsection header.
+
+        Rules used:
+        - Ignore pure HR lines.
+        - Reject lines that end with typical sentence punctuation.
+        - Reject lines that start with common sentence-leading words (you, this, the, a, an, they, your).
+        - Prefer relatively short, title-like lines (few words).
+        - Accept lines that are Title Case or short single words.
+        """
+        if not line:
+            return False
+        s = line.strip()
+        if not s:
+            return False
+        # HR line
+        if set(s) == {"-"}:
+            return False
+        # Sentence-like lines end with punctuation
+        if s.endswith((".", "!", "?", ":")):
+            return False
+        lower = s.lower()
+        # Reject obvious sentence starts
+        for prefix in (
+            "you ",
+            "this ",
+            "they ",
+            "the ",
+            "a ",
+            "an ",
+            "your ",
+            "possible ",
+            "sometimes ",
+            "depending ",
+        ):
+            if lower.startswith(prefix):
+                return False
+
+        words = s.split()
+        # If it's too long, it's probably body text wrapped across lines
+        if len(words) > 8 or len(s) > 80:
+            return False
+
+        # If it's title-cased or a short single word, assume header
+        if s == s.title() or len(words) <= 3:
+            return True
+
+        return False
 
     def _parse_special_abilities(self):
         """Parse the Special Abilities section."""
@@ -151,7 +270,8 @@ class CharacterSheetParser:
         ability = None
 
         for line in content:
-            if line and not line.startswith("\t") and line.strip():
+            # Start of a new ability: non-indented, non-HR line
+            if line and not line.startswith(("\t", " ")) and line.strip():
                 if ability:
                     self.data["special_abilities"].append(ability)
                 ability = {"name": line.strip(), "description": []}
@@ -260,10 +380,16 @@ class CharacterSheetParser:
         current_subsection = None
 
         for line in content:
-            if line and not line.startswith("\t") and line.strip():
+            # Treat as a subsection header only when the heuristic says so.
+            if (
+                line
+                and not line.startswith("\t")
+                and self._looks_like_subsection_header(line)
+            ):
                 current_subsection = line.strip()
                 self.data["background"][current_subsection] = []
             elif current_subsection and line.strip():
+                # Append wrapped paragraph lines to the current subsection body
                 self.data["background"][current_subsection].append(line.strip())
 
     def _parse_notes(self):
@@ -272,7 +398,11 @@ class CharacterSheetParser:
         current_subsection = None
 
         for line in content:
-            if line and not line.startswith("\t") and line.strip():
+            if (
+                line
+                and not line.startswith("\t")
+                and self._looks_like_subsection_header(line)
+            ):
                 current_subsection = line.strip()
                 self.data["notes"][current_subsection] = []
             elif current_subsection and line.strip():
