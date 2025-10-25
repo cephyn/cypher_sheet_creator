@@ -203,11 +203,14 @@ class CharacterSheetParser:
                     end_idx = i
                     break
 
-        # Return non-empty, rstripped lines within boundaries, skipping lone HRs
+        # Return lines within boundaries. Preserve blank lines as '' markers
+        # so callers can reconstruct paragraph boundaries later. Skip lone HRs.
         content: List[str] = []
         for line in self.lines[start_idx:end_idx]:
             t = line.rstrip()
+            # Preserve intentional blank lines as paragraph separators
             if not t:
+                content.append("")
                 continue
             # Skip lines made purely of dashes (section separators)
             if set(t) == {"-"}:
@@ -263,6 +266,46 @@ class CharacterSheetParser:
             return True
 
         return False
+
+    def _merge_lines_into_paragraphs(self, lines: List[str]) -> List[str]:
+        """Merge wrapped lines into paragraph strings.
+
+        Input may contain empty-string markers indicating paragraph breaks.
+        This returns a list of paragraph strings with hyphenation handled and
+        extra whitespace normalized.
+        """
+        paragraphs: List[str] = []
+        buf: List[str] = []
+
+        def flush_buf():
+            if not buf:
+                return
+            text = " ".join(buf)
+            # Normalize multiple spaces
+            text = re.sub(r"\s+", " ", text).strip()
+            if text:
+                paragraphs.append(text)
+            buf.clear()
+
+        for line in lines:
+            if line == "":
+                # paragraph separator
+                flush_buf()
+                continue
+            s = line.strip()
+            if not s:
+                flush_buf()
+                continue
+            # Handle hyphenation at line end: 'exam-
+            # ple' -> 'example'
+            if buf and buf[-1].endswith("-"):
+                # merge without space and remove trailing hyphen
+                buf[-1] = buf[-1][:-1] + s
+            else:
+                buf.append(s)
+
+        flush_buf()
+        return paragraphs
 
     def _parse_special_abilities(self):
         """Parse the Special Abilities section."""
@@ -378,7 +421,6 @@ class CharacterSheetParser:
         """Parse the Background section."""
         content = self._get_section_content("Background")
         current_subsection = None
-
         for line in content:
             # Treat as a subsection header only when the heuristic says so.
             if (
@@ -388,15 +430,19 @@ class CharacterSheetParser:
             ):
                 current_subsection = line.strip()
                 self.data["background"][current_subsection] = []
-            elif current_subsection and line.strip():
-                # Append wrapped paragraph lines to the current subsection body
-                self.data["background"][current_subsection].append(line.strip())
+            elif current_subsection:
+                # Append raw lines (including empty markers) to the current subsection
+                # so we can reconstruct paragraphs later.
+                self.data["background"][current_subsection].append(line)
+
+        # Post-process to merge wrapped lines into paragraph strings
+        for key, lines in list(self.data["background"].items()):
+            self.data["background"][key] = self._merge_lines_into_paragraphs(lines)
 
     def _parse_notes(self):
         """Parse the Notes section."""
         content = self._get_section_content("Notes")
         current_subsection = None
-
         for line in content:
             if (
                 line
@@ -405,5 +451,9 @@ class CharacterSheetParser:
             ):
                 current_subsection = line.strip()
                 self.data["notes"][current_subsection] = []
-            elif current_subsection and line.strip():
-                self.data["notes"][current_subsection].append(line.strip())
+            elif current_subsection:
+                self.data["notes"][current_subsection].append(line)
+
+        # Merge wrapped lines into paragraphs for notes
+        for key, lines in list(self.data["notes"].items()):
+            self.data["notes"][key] = self._merge_lines_into_paragraphs(lines)

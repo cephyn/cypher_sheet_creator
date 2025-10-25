@@ -519,9 +519,10 @@ class CypherCharacterSheetPDF:
                 self.story.append(
                     Paragraph(subsection, self.styles["SubsectionHeader"])
                 )
-            text = " ".join(content).strip()
-            if text:
-                self.story.append(Paragraph(text, self.styles["Normal2"]))
+            # content is a list of paragraph strings
+            for para in content:
+                if para and para.strip():
+                    self.story.append(Paragraph(para, self.styles["Normal2"]))
             # small spacer to separate subsections
             self.story.append(Spacer(1, 0.04 * inch))
 
@@ -539,9 +540,9 @@ class CypherCharacterSheetPDF:
                 self.story.append(
                     Paragraph(subsection, self.styles["SubsectionHeader"])
                 )
-            text = " ".join(content).strip()
-            if text:
-                self.story.append(Paragraph(text, self.styles["Normal2"]))
+            for para in content:
+                if para and para.strip():
+                    self.story.append(Paragraph(para, self.styles["Normal2"]))
             self.story.append(Spacer(1, 0.04 * inch))
 
     def _flowables_to_columns(self, items: Sequence[Any], ncols: int = 2):
