@@ -1,0 +1,181 @@
+Tracker is a Rugged Explorer who Hunts with a Stealth Flavor in a Historical
+world
+--------------------------------------------------------------------------------
+
+Might:     ______ Pool: 10 Edge: 1 Defense: Practiced
+Speed:     ______ Pool: 12 Edge: 0 Defense: Practiced
+Intellect: ______ Pool: 12 Edge: 0 Defense: Practiced
+Initiative: Practiced
+
+Effort: 1
+Armor: 1
+Experience Points: 0
+        Alt Experience Points: 0
+
+Recovery Roll: 1d6+1
+	Rested > 1 Action > 10 Minutes > 1 Hour > 10 Hours
+
+Damage Track:
+	Hale > Impaired > Debilitated
+
+
+Special Abilities
+-----------------
+
+Attack flourish
+	With your attack, you add stylish moves, entertaining quips, or a
+	certain something that entertains or impresses others. One creature you
+	choose within short range who can see you gains an asset to its next
+	task if taken within a round or two. Enabler.
+
+Find the way
+	When you apply Effort to a navigation task because you don't know the
+	way, are lost, are attempting to blaze a new route, need to choose
+	between two or more otherwise similar paths to take, or something very
+	similar, you can apply a free level of Effort. Enabler.
+
+Tracker
+	You are trained in following and identifying tracks. Enabler.
+
+Practiced in armor
+	You can wear armor for long periods of time without tiring and can
+	compensate for slowed reactions from wearing armor. You reduce the Speed
+	cost for wearing armor by 1. You start the game with a type of armor of
+	your choice. Enabler.
+
+Danger sense
+	Costs 1 Speed point
+	Your initiative task is eased. You pay the cost each time the ability is
+	used. Enabler.
+
+
+Skills
+------
+
+Climbing, jumping, running, and swimming (Trained)
+	You're trained in all tasks involving climbing, jumping, running, and
+	swimming.
+
+Disguise (nature camouflage) (Trained)
+
+Identifying or using natural plants (Trained)
+	You're trained in all tasks involving identifying or using natural
+	plants.
+
+Sneaking (Trained)
+
+Training, riding, or placating natural animals (Trained)
+	You're trained in all tasks involving training, riding, or placating
+	natural animals.
+
+Light weapons (Practiced)
+	Light Weapons
+
+Medium weapons (Practiced)
+	Medium Weapons
+
+Charm, persuasion, etiquette, or deception (Inability)
+	You have no social graces and prefer animals to people. Any task
+	involving charm, persuasion, etiquette, or deception is hindered.
+
+Heavy weapons (Inability)
+	Heavy Weapons
+
+
+Attacks
+-------
+
+Fast Punch
+	A light speed attack eased by one step doing 2 damage.
+	A lightning left jab.
+
+Spear
+	A light speed attack eased by one step doing 2 damage.
+
+Bow & Arrow
+	A medium speed attack doing 4 damage at long distance.
+
+Cyphers
+-------
+Limit: 2
+
+Attractor (Level 8, Manifest)
+	One unanchored item the user's size or smaller within long range (very
+	long range if the cypher level is 8 or higher) is drawn immediately to
+	them. This takes one round. The item has no momentum when it arrives.
+
+Effort Enhancer (Combat) (Level 4, Subtle)
+	For the next hour, the user can apply one free level of Effort to any
+	task (including a combat task) without spending points from a Pool. The
+	free level of Effort provided by this cypher does not count toward the
+	maximum amount of Effort a character can normally apply to one task.
+	Once this free level of Effort is used, the effect of the cypher ends.
+
+
+Equipment
+---------
+Money: 0
+
+- You carry an explorer's pack with rope, two days' rations, a bedroll, and
+other tools needed for outdoor survival. Granted from Rugged.
+- Light Leathers
+- Bow & Arrow
+- Stone Dagger
+
+Advancements
+------------
+Tier: 1
+
+[ ] Increase Capabilities
+[ ] Move Toward Perfections
+[ ] Extra Effort
+[ ] Skill Training
+[ ] Other
+
+
+Background
+----------
+Explorer
+You are a person of action and physical ability, fearlessly facing the unknown.
+You travel to strange, exotic, and dangerous places, and discover new things.
+This means you're physical but also probably knowledgeable. Although Explorers
+can be academics or well studied, they are first and foremost interested in
+action. They face grave dangers and terrible obstacles as a routine part of
+life.
+
+Rugged
+You're a nature lover accustomed to living rough, pitting your wits against the
+elements. Most likely, you're a skilled hunter, gatherer, or naturalist. Years
+of living in the wild have left their mark with a worn countenance, wild hair,
+or scars. Your clothing is probably much less refined than the garments worn by
+city dwellers.
+
+Hunts
+You are a stalking hunter who excels at bringing down your selected quarry.
+
+Background Connection
+---------------------
+
+
+Focus Connection
+----------------
+
+
+Notes
+-----
+
+Possible player intrusions based on your character type:
+Fortuitous Malfunction
+A trap or a dangerous device malfunctions before it can affect you.
+
+Serendipitous Landmark
+Just when it seems like the path is lost (or you are), a trail marker, a
+landmark, or simply the way the terrain or corridor bends, rises, or falls away
+suggests to you the best path forward, at least from this point.
+
+Weak Strain
+The poison or disease turns out not to be as debilitating or deadly as it first
+seemed, and inflicts only half the damage that it would have otherwise.
+
+Possible GM intrusion from your focus:
+The quarry notices the character. The quarry isn't as vulnerable as it seemed.

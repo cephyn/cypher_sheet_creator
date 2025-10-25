@@ -1,0 +1,180 @@
+Lore Keeper is a Virtuous Speaker who Learns Quickly with a Skills And Knowledge
+Flavor in a Historical world
+--------------------------------------------------------------------------------
+
+Might:     ______ Pool: 11 Edge: 0 Defense: Practiced
+Speed:     ______ Pool: 11 Edge: 0 Defense: Practiced
+Intellect: ______ Pool: 17 Edge: 1 Defense: Trained
+Initiative: Practiced
+
+Effort: 1
+Armor: 0
+Experience Points: 0
+        Alt Experience Points: 0
+
+Recovery Roll: 1d6+1
+	Rested > 1 Action > 10 Minutes > 1 Hour > 10 Hours
+
+Damage Track:
+	Hale > Impaired > Debilitated
+
+
+Special Abilities
+-----------------
+
+Enhanced intellect
+	You gain 3 points to your Intellect Pool. Enabler.
+
+There's your problem
+	You are trained in tasks related to figuring out how to solve problems
+	with multiple solutions (like the best way to pack a truck, calm an
+	enraged customer, give a cat a shot of insulin, or find a route through
+	the city for maximum speed). Enabler.
+
+Fast talk
+	Costs 1 Intellect point
+	When speaking with an intelligent creature who can understand you and
+	isn't hostile, you convince that creature to take one reasonable action
+	in the next round. A reasonable action must be agreed upon by the GM; it
+	should not put the creature or its allies in obvious danger or be wildly
+	out of character. Action.
+
+Anecdote
+	Costs 2 Intellect points
+	You can lift the spirits of a group of creatures and help them bond
+	together by entertaining them with an uplifting or pointed anecdote. For
+	the next hour, those who pay attention to your story are trained in a
+	task you choose that's related to the anecdote, as long as it's not an
+	attack or defense task. Action to initiate, one minute to complete.
+
+
+Skills
+------
+
+Discerning people's true motives or seeing through lies (Trained)
+	You are trained in discerning people's true motives or seeing through
+	lies.
+
+Geography (Trained)
+
+History (Trained)
+
+Intellect defense tasks (Trained)
+	Your adherence to a strict moral code has hardened your mind against
+	fear, doubt, and outside influence. You are trained in Intellect defense
+	tasks.
+
+Persuading (Trained)
+
+Seeing through deception (Trained)
+
+Light weapons (Practiced)
+	Light Weapons
+
+Heavy weapons (Inability)
+	Heavy Weapons
+
+Medium weapons (Inability)
+	Medium Weapons
+
+
+Attacks
+-------
+
+Fast Punch
+	A light speed attack eased by one step doing 2 damage.
+	A lightning left jab.
+
+Stone Knife
+	A light speed attack eased by one step doing 2 damage.
+	A light weapon of your choice. Granted from Starting Equipment.
+
+Cyphers
+-------
+Limit: 2
+
+Equipment Cache (Level 5, Manifest)
+	The user can rummage around and produce from the cypher a desired piece
+	of equipment (not an artifact) whose level does not exceed the cypher's
+	level. The piece of equipment persists for up to one day, unless its
+	fundamental nature allows only a single use (such as with a grenade).
+
+Gas Bomb (Level 7, Manifest)
+	Thrown a short distance, this bursts in a poisonous cloud within an
+	immediate area. The cloud lingers for 1d6 rounds unless conditions
+	dictate otherwise. Roll a d100 to determine the effect.
+	Rolled a 94. Sleep gas: living creatures that breathe fall asleep for a
+	number of rounds equal to the cypher's level or until awoken by a
+	violent action or an extremely loud noise.
+
+
+Equipment
+---------
+Money: 0
+
+- 
+
+Advancements
+------------
+Tier: 1
+
+[ ] Increase Capabilities
+[ ] Move Toward Perfections
+[ ] Extra Effort
+[ ] Skill Training
+[ ] Other
+
+
+Background
+----------
+Speaker
+You're good with words and good with people. You talk your way past challenges
+and out of jams, and you get people to do what you want. Speakers are smart and
+charismatic. They like people and, more important, they understand them. This
+helps speakers get others to do what needs to be done.
+
+Virtuous
+Doing the right thing is a way of life. You live by a code, and that code is
+something you attend to every day. Whenever you slip, you reproach yourself for
+your weakness and then get right back on track. Your code probably includes
+moderation, respect for others, cleanliness, and other characteristics that most
+people would agree are virtues, while you eschew their opposites: sloth, greed,
+gluttony, and so on.
+
+Learns Quickly
+You deal with bad situations as they arise, learning new lessons each time.
+
+Background Connection
+---------------------
+
+
+Focus Connection
+----------------
+
+
+Notes
+-----
+
+Possible player intrusions based on your character type:
+Friendly NPC
+An NPC you don't know, someone you don't know that well, or someone you know but
+who hasn't been particularly friendly in the past chooses to help you, though
+doesn't necessarily explain why. Maybe they'll ask you for a favor in return
+afterward, depending on how much trouble they go to.
+
+Perfect Suggestion
+A follower or other already-friendly NPC suggests a course of action with regard
+to an urgent question, problem, or obstacle you're facing.
+
+Unexpected Gift
+An NPC hands you a physical gift you were not expecting, one that helps put the
+situation at ease if things seem strained, or provides you with a new insight
+for understanding the context of the situation if there's something you're
+failing to understand or grasp.
+
+Dauntless
++2 to your Might Pool.
+Granted from Virtuous
+
+Possible GM intrusion from your focus:
+Accidents and mistakes are great teachers.

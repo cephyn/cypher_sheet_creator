@@ -1,0 +1,187 @@
+Warrior is a Vicious Warrior who Never Says Die in a Historical world
+---------------------------------------------------------------------
+
+Might:     ______ Pool: 16 Edge: 1 Defense: Practiced
+Speed:     ______ Pool: 10 Edge: 0 Defense: Practiced
+Intellect: ______ Pool:  8 Edge: 0 Defense: Practiced
+Initiative: Practiced
+
+Effort: 1
+Armor: 2
+Experience Points: 0
+        Alt Experience Points: 0
+
+Recovery Roll: 1d6+1
+	Rested > 1 Action > 10 Minutes > 1 Hour > 10 Hours
+
+Damage Track:
+	Hale > Impaired > Debilitated
+
+
+Special Abilities
+-----------------
+
+Combat prowess
+	You add +1 damage to one type of weapon attack of your choice: melee
+	weapon attacks. Enabler.
+
+Improved recovery
+	Your ten-minute recovery roll takes only one action instead, so that
+	your first two recovery rolls are one action, the third is one hour, and
+	the fourth is ten hours. Enabler.
+
+Practiced in armor
+	You can wear armor for long periods of time without tiring and can
+	compensate for slowed reactions from wearing armor. You reduce the Speed
+	cost for wearing armor by 1. You start the game with a type of armor of
+	your choice. Enabler.
+
+Bash
+	Costs 1 Might point
+	This is a pummeling melee attack. Your attack inflicts 1 less point of
+	damage than normal, but dazes your target for one round, during which
+	time all tasks it performs are hindered. Action.
+
+Push on through
+	Costs 2 Might points
+	You ignore the effects of terrain while moving for one hour. Enabler.
+
+Berserk
+	Once you begin fighting, it's hard for you to stop. In fact, it's a
+	difficulty 2 Intellect task to do so, even if your foe surrenders or
+	you've run out of foes. If the latter occurs and you fail to stop, you
+	attack the nearest ally within short range.
+
+Bloodthirsty
+	Once you begin fighting, you see only red. You inflict 2 additional
+	points of damage with any attack.
+
+
+Skills
+------
+
+Climbing (Trained)
+
+Running (Trained)
+
+Tracking creatures (Trained)
+	You are trained in tracking creatures. If a creature has wronged you,
+	the tracking task is eased.
+
+Heavy weapons (Practiced)
+	Heavy Weapons
+
+Light weapons (Practiced)
+	Light Weapons
+
+Medium weapons (Practiced)
+	Medium Weapons
+
+
+Attacks
+-------
+
+Stone Dagger
+	A light speed attack eased by one step doing 3 damage.
+	A light weapon of your choice. Granted from Starting Equipment.
+
+Stone Axe
+	A medium might attack doing 5 damage.
+
+Punch
+	A light might attack eased by one step doing 2 damage.
+	A right jab.
+
+Cyphers
+-------
+Limit: 2
+
+Knowledge Enhancement (Level 1, Subtle)
+	For the next day, the character has training in a predetermined skill
+	(or two skills if the cypher is level 5 or higher). The skill could be
+	anything (including something specific to the operation of a particular
+	device), or roll a d100 to choose a common skill. (It is easy to get
+	addicted to the quick hit of training that comes from knowledge
+	enhancement cyphers. Characters who rely on them too often may find
+	themselves at a disadvantage when they run out, presenting a great
+	opportunity for GM intrusion.)
+	Rolled a 46. Repairing (sometimes specific to one device).
+
+Solvent (Level 3, Manifest)
+	Dissolves 1 cubic foot of material each round. After one round per
+	cypher level, the cypher becomes inert.
+
+
+Equipment
+---------
+Money: 0
+
+- Armor of your choice. Granted from Practiced In Armor.
+- Bone Rattleshirt (Medium Armor)
+- Stone Axe
+- Stone Dagger
+
+Advancements
+------------
+Tier: 1
+
+[ ] Increase Capabilities
+[ ] Move Toward Perfections
+[ ] Extra Effort
+[ ] Skill Training
+[ ] Other
+
+
+Background
+----------
+Warrior
+You're a good ally to have in a fight. You know how to use weapons and defend
+yourself. Depending on the genre and setting in question, this might mean
+wielding a sword and shield in the gladiatorial arena, an AK-47 and a bandolier
+of grenades in a savage firefight, or a blaster rifle and powered armor when
+exploring an alien planet. Warriors are physical, action-oriented people.
+They're more likely to overcome a challenge using force than by other means, and
+they often take the most straightforward path toward their goals.
+
+Vicious
+You try to hide what's inside, fold it into yourself when everything inside you
+screams to let go, make them pay, make them hurt, and make them bleed. Sometimes
+you succeed for your friends-smiling like they smile, laughing when they laugh,
+and sometimes even having other emotions of your own. But it's always there,
+that feeling of frantic glee mixed with hate that sometimes leaps out of you
+when you confront a foe. Violence your friends can tolerate, but you sometimes
+worry they will also learn that you are cruel.
+
+Never Says Die
+You never quit, can shrug off a beating, and always come back for more.
+
+Background Connection
+---------------------
+
+
+Focus Connection
+----------------
+
+
+Notes
+-----
+
+Possible player intrusions based on your character type:
+Perfect Setup
+You're fighting at least three foes and each one is standing in exactly the
+right spot for you to use a move you trained in long ago, allowing you to attack
+all three as a single action. Make a separate attack roll for each foe. You
+remain limited by the amount of Effort you can apply on one action.
+
+Old Friend
+A comrade in arms from your past shows up unexpectedly and provides aid in
+whatever you're doing. They are on a mission of their own and can't stay longer
+than it takes to help out, chat for a while after, and perhaps share a quick
+meal.
+
+Weapon Break
+Your foe's weapon has a weak spot. In the course of the combat, it quickly
+becomes damaged and moves two steps down the object damage track.
+
+Possible GM intrusion from your focus:
+Sometimes, it's equipment or weapons that give out.

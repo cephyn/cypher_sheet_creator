@@ -1,0 +1,179 @@
+Herbalist is a Perceptive Explorer who Lives In The Wilderness with a Skills And
+Knowledge Flavor in a Historical world
+--------------------------------------------------------------------------------
+
+Might:     ______ Pool: 13 Edge: 1 Defense: Practiced
+Speed:     ______ Pool: 13 Edge: 0 Defense: Trained
+Intellect: ______ Pool: 13 Edge: 0 Defense: Practiced
+Initiative: Practiced
+
+Effort: 1
+Armor: 0
+Experience Points: 0
+        Alt Experience Points: 0
+
+Recovery Roll: 1d6+1
+	Rested > 1 Action > 10 Minutes > 1 Hour > 10 Hours
+
+Damage Track:
+	Hale > Impaired > Debilitated
+
+
+Special Abilities
+-----------------
+
+Enhanced might
+	You gain 3 points to your Might Pool. Enabler.
+
+Trained without armor
+	You are trained in Speed defense tasks when not wearing armor. Enabler.
+
+
+Skills
+------
+
+Climbing (Trained)
+
+Cooking (Trained)
+
+Finding or noticing small details (Trained)
+	You have an eye for detail. You are trained in any task that involves
+	finding or noticing small details.
+
+Foraging (Trained)
+
+Geography (Trained)
+
+Herbal remedies (Trained)
+
+Identifying creatures (Trained)
+
+Identifying objects or calling to mind a minor detail or bit of trivia (Trained)
+	You know a little about everything. You are trained in any task that
+	involves identifying objects or calling to mind a minor detail or bit of
+	trivia.
+
+Identifying plants (Trained)
+
+Intimidating another creature (Trained)
+	Your skill at making deductions can be imposing. You are trained in any
+	task that involves intimidating another creature.
+
+Swimming (Trained)
+
+Light weapons (Practiced)
+	Light Weapons
+
+Medium weapons (Practiced)
+	Medium Weapons
+
+Heavy weapons (Inability)
+	Heavy Weapons
+
+Positive social interactions (Inability)
+	Your confidence comes off as arrogance to people who don't know you. Any
+	task involving positive social interactions is hindered.
+
+
+Attacks
+-------
+
+Medium Weapon
+	A medium might attack doing 4 damage.
+	A medium weapon of your choice. Granted from Starting Equipment.
+
+Punch
+	A light might attack eased by one step doing 2 damage.
+	A right jab.
+
+Stone Knife
+	A light speed attack eased by one step doing 2 damage.
+
+Cyphers
+-------
+Limit: 2
+
+Death Bringer (Level 3, Manifest)
+	For the next minute, when the user strikes an NPC or creature of the
+	cypher level or lower, they can choose to make a second attack roll. If
+	the second attack roll is a success, the target is killed. If the target
+	is a PC, the character instead moves down one step on the damage track.
+
+Fireproofing (Level 5, Manifest)
+	A nonliving object treated by this cypher has Armor against fire damage
+	equal to the cypher's level for one day.
+
+
+Equipment
+---------
+Money: 0
+
+- You have a bag of light tools. Granted from Perceptive.
+- Poisons
+
+Advancements
+------------
+Tier: 1
+
+[ ] Increase Capabilities
+[ ] Move Toward Perfections
+[ ] Extra Effort
+[ ] Skill Training
+[ ] Other
+
+
+Background
+----------
+Explorer
+You are a person of action and physical ability, fearlessly facing the unknown.
+You travel to strange, exotic, and dangerous places, and discover new things.
+This means you're physical but also probably knowledgeable. Although Explorers
+can be academics or well studied, they are first and foremost interested in
+action. They face grave dangers and terrible obstacles as a routine part of
+life.
+
+Perceptive
+You miss little. You pick out the small details in the world around you and are
+skilled at making deductions from the information you find. Your talents make
+you an exceptional sleuth, a formidable scientist, or a talented scout.
+
+As adept as you are at finding clues, you have no skill at picking up on social
+cues. You overlook an offense that your deductions give or how uncomfortable
+your scrutiny can make the people around you. You tend to dismiss others as
+being intellectual dwarfs compared to you, which avails you little when you need
+a favor.
+
+Lives In The Wilderness
+You can survive in badlands where others perish.
+
+Background Connection
+---------------------
+
+
+Focus Connection
+----------------
+
+
+Notes
+-----
+
+Possible player intrusions based on your character type:
+Fortuitous Malfunction
+A trap or a dangerous device malfunctions before it can affect you.
+
+Serendipitous Landmark
+Just when it seems like the path is lost (or you are), a trail marker, a
+landmark, or simply the way the terrain or corridor bends, rises, or falls away
+suggests to you the best path forward, at least from this point.
+
+Weak Strain
+The poison or disease turns out not to be as debilitating or deadly as it first
+seemed, and inflicts only half the damage that it would have otherwise.
+
+Smart
++2 to your Intellect Pool.
+Granted from Perceptive
+
+Possible GM intrusion from your focus:
+People in cities and towns sometimes disparage those who look (and smell) like
+they live in the wilds, as if they were ignorant or barbaric.

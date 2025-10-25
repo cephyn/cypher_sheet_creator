@@ -1,0 +1,229 @@
+Shaman is a Empathic Adept who Shepherds Spirits with a Magic Flavor in a Any
+world
+--------------------------------------------------------------------------------
+
+Might:     ______ Pool: 10 Edge: 0 Defense: Practiced
+Speed:     ______ Pool: 10 Edge: 0 Defense: Practiced
+Intellect: ______ Pool: 18 Edge: 1 Defense: Practiced
+Initiative: Practiced
+
+Effort: 1
+Armor: 0
+Experience Points: 0
+        Alt Experience Points: 0
+
+Recovery Roll: 1d6+1
+	Rested > 1 Action > 10 Minutes > 1 Hour > 10 Hours
+
+Damage Track:
+	Hale > Impaired > Debilitated
+
+
+Special Abilities
+-----------------
+
+Blessing of the gods
+	As a servant of the gods, you can call up blessings in their name. This
+	blessing depends on the god's general demeanor and area of influence.
+	
+	* Benevolence/Righteousness/Spirit (2+ Intellect points). 
+	One level 1 demon, spirit, or similar creature within short range is
+	destroyed or banished. In addition to the normal options for using
+	Effort, you can choose to use Effort to increase the maximum level of
+	the target. Thus, to destroy or banish a level 5 target (four levels
+	above the normal limit), you must apply four levels of Effort. Action.
+	
+	* Nature/Animals/Plants. You are trained in botany and handling natural
+	animals. Enabler.
+
+Closed mind
+	You are trained in Intellect defense tasks and have +2 Armor against
+	damage that selectively targets your Intellect Pool (which normally
+	ignores Armor). Enabler.
+
+Mental link
+	Costs 1+ Intellect point
+	You open a pathway to another creature's mind via a light touch, which
+	allows you to transmit thoughts and images to each other. The mental
+	link remains regardless of distance and lasts for one hour. In addition
+	to the normal options for using Effort, you can choose to use Effort to
+	extend the duration by one hour for each level of Effort applied. Action
+	to initiate.
+
+Premonition
+	Costs 2 Intellect points
+	You learn one random fact about a creature or location that is pertinent
+	to a topic you designate. Alternatively, you can choose to learn a
+	creature's level; however, if you do so, you cannot learn anything else
+	about it later with this ability. Action.
+
+Question the spirits
+	Costs 2 Intellect points
+	You can call a spirit to you and petition it to answer a few questions
+	(usually no more than three before the spirit fades). First, you must
+	summon a spirit. If it is a spirit of the dead, you must have personally
+	known the creature, have an object that was owned by the creature, or
+	touch the physical remains of the creature. For other spirits, you must
+	know the spirit's full name or have a great deal of an element (such as
+	fire or earth) that the spirit is associated with. If the spirit
+	responds, it can manifest as an insubstantial shade that answers for
+	itself, it can inhabit an object or any remains you provide, or it can
+	manifest as an invisible presence that you speak for. The spirit may not
+	wish to answer your questions, in which case you must persuade it to
+	help. You can attempt to psychically wrestle the spirit into submission
+	(an Intellect task), or you can try diplomacy, deception, or blackmail
+	("Answer me, or I'll tell your children that you were a philanderer" or
+	"I'll destroy this relic that belonged to you"). The GM determines what
+	the spirit might know, based on the knowledge it possessed in life.
+	Action to initiate.
+
+
+Skills
+------
+
+Sensing other emotions, discerning dispositions, and getting a hunch about
+people around you (Trained)
+	You're trained in tasks involving sensing other emotions, discerning
+	dispositions, and getting a hunch about people around you.
+
+Social interaction, pleasant or otherwise (Trained)
+	You're trained in all tasks involving social interaction, pleasant or
+	otherwise.
+
+Light weapons (Practiced)
+	Light Weapons
+
+Heavy weapons (Inability)
+	Heavy Weapons
+
+Intellect defense rolls (Inability)
+	Being so receptive to others' thoughts and moods makes you vulnerable to
+	anything that attacks your mind. Intellect defense rolls are hindered.
+
+Medium weapons (Inability)
+	Medium Weapons
+
+
+Attacks
+-------
+
+Fast Punch
+	A light speed attack eased by one step doing 2 damage.
+	A lightning left jab.
+
+Staff
+	A doing 2 damage.
+
+Cyphers
+-------
+Limit: 3
+
+Effort Enhancer (Combat) (Level 4, Subtle)
+	For the next hour, the user can apply one free level of Effort to any
+	task (including a combat task) without spending points from a Pool. The
+	free level of Effort provided by this cypher does not count toward the
+	maximum amount of Effort a character can normally apply to one task.
+	Once this free level of Effort is used, the effect of the cypher ends.
+
+Intelligence Enhancement (Level 4, Subtle)
+	All of the user's tasks involving intelligent deduction-such as playing
+	chess, inferring a connection between clues, solving a mathematical
+	problem, finding a bug in computer code, and so on-are eased by two
+	steps for one hour. In the subsequent hour, the strain hinders the same
+	tasks by two steps.
+
+Tissue Regeneration (Level 5, Subtle)
+	For the next hour, the user regains 1 point lost to damage per round, up
+	to a total number of points equal to twice the cypher's level. As each
+	point is regained, they choose which Pool to add it to. If all their
+	Pools are at maximum, the regeneration pauses until they take more
+	damage, at which point it begins again (if any time remains in the hour)
+	until the duration expires. (A tissue regeneration cypher can be used to
+	regenerate a lost appendage (an arm, a foot, a leg, and so on) or to
+	repair scar tissue from burns and other tissue-related disfigurements.
+	If the cypher is used in this fashion, it restores only 1d6 points over
+	the hour duration.)
+
+
+Equipment
+---------
+Money: 0
+
+- 
+
+Advancements
+------------
+Tier: 1
+
+[ ] Increase Capabilities
+[ ] Move Toward Perfections
+[ ] Extra Effort
+[ ] Skill Training
+[ ] Other
+
+
+Background
+----------
+Adept
+You master powers or abilities outside the experience, understanding, and
+sometimes belief of others. They might be magic, psychic powers, mutant
+abilities, or just a wide variety of intricate devices, depending on the
+setting. Adepts are usually thoughtful, intelligent types. They often think
+carefully before acting and rely heavily on their supernatural abilities.
+(“Magic” here is a term used very loosely. It's a catch-all for the kinds of
+wondrous, possibly supernatural things that your character can do that others
+cannot. It might actually be an expression of technological devices, channeling
+spirits, mutations, psionics, nanotechnology, or any number of other sources.)
+
+Empathic
+Other people are open books to you. You may have a knack for reading a person's
+tells, those subtle movements that convey an individual's mood and disposition.
+Or you may receive information in a more direct way, feeling a person's emotions
+as if they were tangible things, sensations that lightly brush against your
+mind. Your gift for empathy helps you navigate social situations and control
+them to avoid misunderstandings and prevent useless conflicts from erupting.
+
+The constant bombardment of emotions from those around you likely takes a toll.
+You might move with the prevailing mood, swinging from giddy happiness to bitter
+sorrow with little warning. Or you might close yourself off and remain
+inscrutable to others out of a sense of self-preservation or an unconscious fear
+that everyone else might learn how you truly feel.
+
+Shepherds Spirits
+Wandering souls, nature spirits, and elemental beings aid and support you.
+
+Background Connection
+---------------------
+
+
+Focus Connection
+----------------
+
+
+Notes
+-----
+
+Possible player intrusions based on your character type:
+Advantageous Malfunction
+A device being used against you malfunctions. It might harm the user or one of
+their allies for a round, or activate a dramatic and distracting side effect for
+a few rounds.
+
+Convenient Idea
+A flash of insight provides you with a clear answer or suggests a course of
+action with regard to an urgent question, problem, or obstacle you're facing.
+
+Inexplicably Unbroken
+An inactive, ruined, or presumed-destroyed device temporarily activates and
+performs a useful function relevant to the situation. This is enough to buy you
+some time for a better solution, alleviate a complication that was interfering
+with your abilities, or just get you one more use out of a depleted cypher or
+artifact.
+
+Open Mind
++4 to your Intellect Pool.
+Granted from Empathic
+
+Possible GM intrusion from your focus:
+Some people don't trust those who deal with spirits. The dead sometimes don't
+want shepherding.

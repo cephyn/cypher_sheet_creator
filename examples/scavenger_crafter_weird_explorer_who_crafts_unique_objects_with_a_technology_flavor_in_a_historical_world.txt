@@ -1,0 +1,193 @@
+Scavenger/Crafter is a Weird Explorer who Crafts Unique Objects with a
+Technology Flavor in a Historical world
+--------------------------------------------------------------------------------
+
+Might:     ______ Pool: 12 Edge: 1 Defense: Practiced
+Speed:     ______ Pool: 13 Edge: 0 Defense: Practiced
+Intellect: ______ Pool: 11 Edge: 0 Defense: Practiced
+Initiative: Practiced
+
+Effort: 1
+Armor: 1
+Experience Points: 0
+        Alt Experience Points: 0
+
+Recovery Roll: 1d6+1
+	Rested > 1 Action > 10 Minutes > 1 Hour > 10 Hours
+
+Damage Track:
+	Hale > Impaired > Debilitated
+
+
+Special Abilities
+-----------------
+
+Master identifier
+	You are trained in identifying the function of any kind of device.
+	Enabler.
+
+Practiced in armor
+	You can wear armor for long periods of time without tiring and can
+	compensate for slowed reactions from wearing armor. You reduce the Speed
+	cost for wearing armor by 1. You start the game with a type of armor of
+	your choice. Enabler.
+
+Practiced with all weapons
+	You become practiced with light, medium, and heavy weapons and suffer no
+	penalty when using any kind of weapon. Enabler.
+
+Tinker
+	Costs 1 Intellect point
+	You make a device do something different from its original purpose. For
+	example, a blaster becomes a bomb. A scanner becomes a signal booster
+	for a radio transmitter. A music player becomes a battery for another
+	device. The effective level of the modified device is 1 lower than
+	normal, and the device is rendered unusable (for its original purpose)
+	until repaired. Action to initiate.
+
+Block
+	Costs 3 Speed points
+	You automatically block the next melee attack made against you within
+	the next minute. Action to initiate.
+
+A sense for the weird
+	Sometimes-at the GM's discretion-weird things relating to the
+	supernatural or its effects on the world seem to call out to you. You
+	can sense them from afar, and if you get within long range of such a
+	thing, you can sense whether it is overtly dangerous or not.
+
+Distinctive physical quirk
+	You have a unique physical aspect that is, well, bizarre. Depending on
+	the setting, this can vary greatly. You might have purple hair or metal
+	spikes on your head. Perhaps your hands don't connect to your arms,
+	although they move as if they do. Maybe a third eye stares out from the
+	side of your head, or superfluous tendrils grow from your back. Whatever
+	it is, your quirk might be a mutation, a supernatural trait (a blessing
+	or curse), a feature with no explanation, or just a really wild tattoo
+	that draws a lot of attention.
+
+
+Skills
+------
+
+Stonework (Trained)
+
+Supernatural knowledge (Trained)
+	You are trained in supernatural knowledge.
+
+Woodwork (Trained)
+
+Heavy weapons (Practiced)
+	Heavy Weapons
+
+Light weapons (Practiced)
+	Light Weapons
+
+Medium weapons (Practiced)
+	Medium Weapons
+
+Pleasant social interaction (Inability)
+	People find you unnerving. All tasks relating to pleasant social
+	interaction are hindered.
+
+
+Attacks
+-------
+
+Stone Knife
+	A light speed attack eased by one step doing 2 damage.
+	A light weapon of your choice. Granted from Starting Equipment.
+
+Punch
+	A light might attack eased by one step doing 2 damage.
+	A right jab.
+
+Bone Club
+	A medium might attack doing 4 damage at short distance.
+
+Cyphers
+-------
+Limit: 2
+
+Disarm (Level 6, Subtle)
+	One NPC within immediate range whose level is lower than the cypher
+	level drops whatever they are holding.
+
+Mind Stabilizer (Level 5, Subtle)
+	The user gains +5 to Armor against Intellect damage.
+
+
+Equipment
+---------
+Money: 0
+
+- Light Leathers
+
+Advancements
+------------
+Tier: 1
+
+[ ] Increase Capabilities
+[ ] Move Toward Perfections
+[ ] Extra Effort
+[ ] Skill Training
+[ ] Other
+
+
+Background
+----------
+Explorer
+You are a person of action and physical ability, fearlessly facing the unknown.
+You travel to strange, exotic, and dangerous places, and discover new things.
+This means you're physical but also probably knowledgeable. Although Explorers
+can be academics or well studied, they are first and foremost interested in
+action. They face grave dangers and terrible obstacles as a routine part of
+life.
+
+Weird
+You aren't like anyone else, and that's fine with you. People don't seem to
+understand you-they even seem put off by you-but who cares? You understand the
+world better than they do because you're weird, and so is the world you live in.
+The concept of "the weird" is well known to you. Strange devices, ancient
+locales, bizarre creatures, storms that can transform you, living energy fields,
+conspiracies, aliens, and things most people can't even name populate the world,
+and you thrive on them. You have a special attachment to it all, and the more
+you discover about the weirdness in the world, the more you might discover about
+yourself.
+
+Weird characters might be mutants or people born with strange qualities, but
+sometimes they started out "normal" and adopted the weird by choice.
+
+Crafts Unique Objects
+You're an inventor of strange and useful objects.
+
+Background Connection
+---------------------
+
+
+Focus Connection
+----------------
+
+
+Notes
+-----
+
+Possible player intrusions based on your character type:
+Fortuitous Malfunction
+A trap or a dangerous device malfunctions before it can affect you.
+
+Serendipitous Landmark
+Just when it seems like the path is lost (or you are), a trail marker, a
+landmark, or simply the way the terrain or corridor bends, rises, or falls away
+suggests to you the best path forward, at least from this point.
+
+Weak Strain
+The poison or disease turns out not to be as debilitating or deadly as it first
+seemed, and inflicts only half the damage that it would have otherwise.
+
+Inner Light
++2 to your Intellect Pool.
+Granted from Weird
+
+Possible GM intrusion from your focus:
+The object malfunctions, breaks, or suffers catastrophic or unexpected failure.
