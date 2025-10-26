@@ -306,8 +306,9 @@ class CypherCharacterSheetPDF:
         self._add_special_abilities()
         self._add_attacks()
 
-        # Switch to RIGHT COLUMN (body): Skills, Cyphers, Equipment
-        self.story.append(FrameBreak())
+        # RIGHT COLUMN (body) will be reached naturally if the left column fills.
+        # Do not force a FrameBreak here; this avoids skipping the right column
+        # when the left content already overflowed into it.
         self._add_skills()
         self._add_cyphers()
         self._add_equipment()
