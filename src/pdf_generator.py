@@ -944,7 +944,8 @@ class CypherCharacterSheetPDF:
 
         items.append(Spacer(1, 0.02 * inch))
         items.append(panel)
-        items.append(Spacer(1, 0.02 * inch))
+        # Slightly increase the space below this panel to separate it from the next section header
+        items.append(Spacer(1, 0.04 * inch))
 
         return items
 
