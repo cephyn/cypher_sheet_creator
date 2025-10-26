@@ -44,7 +44,7 @@ class CypherCharacterSheetPDF:
         self.header_height = 0.0 * inch  # no banner header in compact mode
         # Top frame contains only the compact header + advancement panel (full width).
         # Trim height to reduce whitespace before the main body while avoiding overflow.
-        self.top_panel_height = 1.55 * inch
+        self.top_panel_height = 1.35 * inch
 
         # Build document with custom frames and a page template
         self.doc = BaseDocTemplate(
@@ -410,9 +410,12 @@ class CypherCharacterSheetPDF:
             self._add_compact_header_line()
             return
 
-        # Stack: header text on top, full-width advancement panel below
+        # Stack: header text on top, a tiny spacer, then the full-width advancement panel below
+        spacer_between = Spacer(1, 0.06 * inch)
         top_row = Table(
-            [[left_cell], [adv_panel]], colWidths=[avail_width], hAlign="LEFT"
+            [[left_cell], [spacer_between], [adv_panel]],
+            colWidths=[avail_width],
+            hAlign="LEFT",
         )
         top_row.setStyle(
             TableStyle(
