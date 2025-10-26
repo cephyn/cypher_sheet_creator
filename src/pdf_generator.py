@@ -18,7 +18,7 @@ from reportlab.platypus import (
     KeepTogether,
     FrameBreak,
 )
-from typing import Dict, List, Any, Sequence
+from typing import Dict, List, Any, Sequence, Optional
 from datetime import datetime
 
 
@@ -41,7 +41,8 @@ class CypherCharacterSheetPDF:
         # Compact margins and panel sizes to reduce wasted space
         self.margin = 0.3 * inch
         self.header_height = 0.0 * inch  # no banner header in compact mode
-        # Top frame holds the title/subtitle + Advancement row, then ATTRIBUTES below it
+        # Top frame contains only the compact header + advancement panel (full width).
+        # Trim height to reduce whitespace before the main body while avoiding overflow.
         self.top_panel_height = 1.55 * inch
 
         # Build document with custom frames and a page template
@@ -261,20 +262,19 @@ class CypherCharacterSheetPDF:
         """Generate the complete PDF in a compact, landscape two-column layout."""
         # Top frame content: Title/subtitle on the left, Advancement panel on the right
         self._add_header_with_top_right_advancement()
-        # Keep ATTRIBUTES directly beneath the top row (still in the top frame)
-        self._add_attributes_section()
-        # Place Recovery/Damage just below Attributes (still in the top frame)
-        for item in self._get_recovery_and_damage_panel():
-            self.story.append(item)
-        # Now switch to the column frames for the rest
+
+        # Move into the main two-column body area.
         self.story.append(FrameBreak())
 
-        # Columnar content
-        # Left column preferred: abilities, attacks
+        # LEFT COLUMN (body): Attributes, Recovery/Damage, then Abilities + Attacks
+        self._add_attributes_section()
+        for item in self._get_recovery_and_damage_panel():
+            self.story.append(item)
         self._add_special_abilities()
         self._add_attacks()
 
-        # Right column preferred: skills, cyphers, equipment
+        # Switch to RIGHT COLUMN (body): Skills, Cyphers, Equipment
+        self.story.append(FrameBreak())
         self._add_skills()
         self._add_cyphers()
         self._add_equipment()
@@ -322,8 +322,8 @@ class CypherCharacterSheetPDF:
         self.story.append(rule)
 
     def _add_header_with_top_right_advancement(self):
-        """Render a single top row with the character title/subtitle on the left
-        and the Advancement panel on the right, positioned above the ATTRIBUTES header.
+        """Render a compact header (name + subtitle) with the Advancement panel
+        directly beneath it spanning the full header width.
         """
         header_data = self.data.get("header", {})
         name = header_data.get("name", "Unknown")
@@ -363,8 +363,9 @@ class CypherCharacterSheetPDF:
             )
         )
 
-        # Build the advancement panel content and grab its main table
-        adv_items = self._get_advancement_panel()
+        # Build the advancement panel content at full header width and grab its main table
+        avail_width = self.page_width - (2 * self.margin)
+        adv_items = self._get_advancement_panel(panel_width=avail_width)
         adv_panel = None
         for it in adv_items:
             if isinstance(it, Table):
@@ -376,11 +377,10 @@ class CypherCharacterSheetPDF:
             self._add_compact_header_line()
             return
 
-        # Compose a two-column table: left header, right advancement panel
-        avail_width = self.page_width - (2 * self.margin)
-        right_w = 2.1 * inch
-        left_w = max(1.0, avail_width - right_w)
-        top_row = Table([[left_cell, adv_panel]], colWidths=[left_w, right_w])
+        # Stack: header text on top, full-width advancement panel below
+        top_row = Table(
+            [[left_cell], [adv_panel]], colWidths=[avail_width], hAlign="LEFT"
+        )
         top_row.setStyle(
             TableStyle(
                 [
@@ -393,17 +393,6 @@ class CypherCharacterSheetPDF:
             )
         )
         self.story.append(top_row)
-        # Draw a thin rule below the header row to visually separate from Attributes
-        rule = Table([[""]])
-        rule.setStyle(
-            TableStyle(
-                [
-                    ("LINEBELOW", (0, 0), (-1, -1), 0.5, grey),
-                    ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
-                ]
-            )
-        )
-        self.story.append(rule)
 
     def _get_attributes_section(self):
         """Return attribute cards as a list of flowables for inclusion in a panel."""
@@ -498,13 +487,13 @@ class CypherCharacterSheetPDF:
         if "recovery_roll" in attrs:
             chips.append(f"<b>Recovery:</b> {attrs['recovery_roll']}")
         if chips:
-            items.append(Spacer(1, 0.03 * inch))
+            items.append(Spacer(1, 0.02 * inch))
             items.append(
                 Paragraph(
                     " | ".join(chips), self.styles.get("Normal2", self.styles["Normal"])
                 )
             )
-            items.append(Spacer(1, 0.04 * inch))
+            items.append(Spacer(1, 0.02 * inch))
 
         return items
 
@@ -513,6 +502,31 @@ class CypherCharacterSheetPDF:
         items = self._get_attributes_section()
         for item in items:
             self.story.append(item)
+
+    def _add_attributes_section_left_width(self):
+        """Add the attributes block constrained to the left column width.
+        Useful when rendering inside the full-width top frame but visually
+        aligning to the left column only (so the ATTRIBUTES header doesn't span
+        the entire page)."""
+        items = self._get_attributes_section()
+        # Build a single-column table where each row is one of the flowables
+        # from the attributes block, constrained to the left column width.
+        avail_width = self.page_width - (2 * self.margin)
+        col1_width = avail_width * 0.6
+        rows = [[it] for it in items]
+        tbl = Table(rows, colWidths=[col1_width], hAlign="LEFT")
+        tbl.setStyle(
+            TableStyle(
+                [
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                    ("ALIGN", (0, 0), (-1, -1), "LEFT"),
+                ]
+            )
+        )
+        self.story.append(tbl)
 
     def _add_special_abilities(self):
         """Add special abilities section."""
@@ -798,8 +812,14 @@ class CypherCharacterSheetPDF:
             )
         )
 
-        # Outer two-column panel
-        panel = Table([[left_cell, right_cell]], colWidths=[1.9 * inch, 4.5 * inch])
+        # Outer two-column panel sized to match the left column width (so it
+        # aligns with the ATTRIBUTES and SPECIAL ABILITIES headers on the left).
+        avail_width = self.page_width - (2 * self.margin)
+        gutter = 0.18 * inch
+        col1_width = avail_width * 0.6
+        left_w = 1.9 * inch
+        right_w = max(1.0, col1_width - left_w)
+        panel = Table([[left_cell, right_cell]], colWidths=[left_w, right_w])
         panel.setStyle(
             TableStyle(
                 [
@@ -813,9 +833,9 @@ class CypherCharacterSheetPDF:
             )
         )
 
-        items.append(Spacer(1, 0.04 * inch))
+        items.append(Spacer(1, 0.02 * inch))
         items.append(panel)
-        items.append(Spacer(1, 0.06 * inch))
+        items.append(Spacer(1, 0.02 * inch))
 
         return items
 
@@ -825,8 +845,11 @@ class CypherCharacterSheetPDF:
         for item in items:
             self.story.append(item)
 
-    def _get_advancement_panel(self):
-        """Return advancement panel as a list of flowables."""
+    def _get_advancement_panel(self, panel_width: Optional[float] = None):
+        """Return advancement panel as a list of flowables.
+        panel_width: if provided, the panel (and inner table) will be sized to this width.
+        Otherwise it defaults to the right-column width.
+        """
         adv_data = self.data.get("advancements", {})
         items = []
 
@@ -845,31 +868,64 @@ class CypherCharacterSheetPDF:
         # Create header
         adv_header = Paragraph("ADVANCEMENT", self.styles["SubsectionHeader"])
 
-        # Create rows with checkboxes and labels
-        adv_rows = []
-        for choice in advancement_choices:
-            adv_rows.append(
-                [
-                    Paragraph(chk, self.styles["Normal2"]),
-                    Paragraph(choice, self.styles["Normal2"]),
-                ]
-            )
+        # Compute the target width for the panel and the inner table
+        if panel_width is None:
+            avail_width = self.page_width - (2 * self.margin)
+            gutter = 0.18 * inch
+            col1_width = avail_width * 0.6
+            panel_width = avail_width - gutter - col1_width
+        # Build a two-column layout inside the panel so options flow left-to-right
+        item_width = panel_width / 2.0
+        chk_w = 0.22 * inch
+        label_w = max(1.0, item_width - chk_w - 0.15 * inch)
 
-        adv_table = Table(adv_rows, colWidths=[0.22 * inch, 1.6 * inch])
+        # Create small two-cell tables for each option (checkbox + label)
+        opt_cells: List[Any] = []
+        for choice in advancement_choices:
+            mini = Table(
+                [
+                    [
+                        Paragraph(chk, self.styles["Normal2"]),
+                        Paragraph(choice, self.styles["Normal2"]),
+                    ]
+                ],
+                colWidths=[chk_w, label_w],
+            )
+            mini.setStyle(
+                TableStyle(
+                    [
+                        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                        ("LEFTPADDING", (0, 0), (-1, -1), 2),
+                        ("RIGHTPADDING", (0, 0), (-1, -1), 2),
+                        ("TOPPADDING", (0, 0), (-1, -1), 1),
+                        ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
+                    ]
+                )
+            )
+            opt_cells.append(mini)
+
+        # Arrange option cells into two columns
+        rows: List[List[Any]] = []
+        for i in range(0, len(opt_cells), 2):
+            left = opt_cells[i]
+            right = opt_cells[i + 1] if i + 1 < len(opt_cells) else Spacer(1, 0)
+            rows.append([left, right])
+
+        adv_table = Table(rows, colWidths=[item_width, item_width])
         adv_table.setStyle(
             TableStyle(
                 [
                     ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                    ("LEFTPADDING", (0, 0), (-1, -1), 2),
-                    ("RIGHTPADDING", (0, 0), (-1, -1), 2),
-                    ("TOPPADDING", (0, 0), (-1, -1), 1),
-                    ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
                 ]
             )
         )
 
         # Create the advancement panel with header and table
-        adv_panel = Table([[adv_header], [adv_table]], colWidths=[1.9 * inch])
+        adv_panel = Table([[adv_header], [adv_table]], colWidths=[panel_width])
         adv_panel.setStyle(
             TableStyle(
                 [
