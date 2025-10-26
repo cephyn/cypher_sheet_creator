@@ -442,18 +442,43 @@ class CharacterSheetParser:
     def _parse_notes(self):
         """Parse the Notes section."""
         content = self._get_section_content("Notes")
-        current_subsection = None
-        for line in content:
-            if (
-                line
-                and not line.startswith("\t")
-                and self._looks_like_subsection_header(line)
-            ):
-                current_subsection = line.strip()
-                self.data["notes"][current_subsection] = []
-            elif current_subsection:
-                self.data["notes"][current_subsection].append(line)
 
-        # Merge wrapped lines into paragraphs for notes
-        for key, lines in list(self.data["notes"].items()):
-            self.data["notes"][key] = self._merge_lines_into_paragraphs(lines)
+        # Group content into blocks separated by blank lines. Each block's first
+        # line is treated as a subsection header; remaining lines belong to that
+        # subsection's body until the next blank line.
+        block: List[str] = []
+        blocks: List[List[str]] = []
+        for line in content:
+            if line == "":
+                if block:
+                    blocks.append(block)
+                    block = []
+                # preserve consecutive blanks as separators only; skip adding
+                continue
+            block.append(line)
+        if block:
+            blocks.append(block)
+
+        for blk in blocks:
+            if not blk:
+                continue
+            header = blk[0].strip()
+            body_lines = blk[1:]  # may be empty
+
+            # Special case: After the heading "Possible player intrusions based on your character type:",
+            # the very next non-empty line should be promoted to its own subsection header (e.g.,
+            # "Fortuitous Malfunction"), with the remaining lines as that subsection's body.
+            norm_header = re.sub(r"\s+", " ", header.strip().lower().rstrip(":"))
+            if norm_header == "possible player intrusions based on your character type":
+                # Add the category header itself with no body (or keep any standalone body merge if desired)
+                self.data["notes"].setdefault(header, [])
+                if body_lines:
+                    promoted = body_lines[0].strip()
+                    promoted_body = body_lines[1:]
+                    self.data["notes"][promoted] = self._merge_lines_into_paragraphs(
+                        promoted_body
+                    )
+                continue
+
+            # Default behavior: first line is the subsection header, rest is body
+            self.data["notes"][header] = self._merge_lines_into_paragraphs(body_lines)

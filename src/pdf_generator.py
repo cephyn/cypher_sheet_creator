@@ -17,6 +17,7 @@ from reportlab.platypus import (
     PageTemplate,
     KeepTogether,
     FrameBreak,
+    NextPageTemplate,
 )
 from typing import Dict, List, Any, Sequence, Optional
 from datetime import datetime
@@ -159,7 +160,7 @@ class CypherCharacterSheetPDF:
         col1_width = avail_width * 0.6
         col2_width = avail_width - gutter - col1_width
 
-        # Top panel for header, attributes, recovery/damage, and advancement
+        # First page: Top panel for header + advancement, then two columns below
         top_y = (
             self.page_height - self.margin - self.header_height - self.top_panel_height
         )
@@ -200,12 +201,42 @@ class CypherCharacterSheetPDF:
             id="col2",
         )
 
-        template = PageTemplate(
-            id="landscape_two_col",
+        # First page should flow left column then right column
+        first_template = PageTemplate(
+            id="first",
             frames=[frame_top, frame_col1, frame_col2],
-            # no banner/footer in compact mode to save space
         )
-        self.doc.addPageTemplates([template])
+
+        # Subsequent pages: only two columns (no top header frame)
+        rest_height = self.page_height - (2 * self.margin)
+        frame_col1_rest = Frame(
+            self.margin,
+            self.margin,
+            col1_width,
+            rest_height,
+            leftPadding=0,
+            rightPadding=6,
+            topPadding=0,
+            bottomPadding=0,
+            id="col1_rest",
+        )
+        frame_col2_rest = Frame(
+            self.margin + col1_width + gutter,
+            self.margin,
+            col2_width,
+            rest_height,
+            leftPadding=6,
+            rightPadding=0,
+            topPadding=0,
+            bottomPadding=0,
+            id="col2_rest",
+        )
+        rest_template = PageTemplate(
+            id="rest",
+            frames=[frame_col1_rest, frame_col2_rest],
+        )
+
+        self.doc.addPageTemplates([first_template, rest_template])
 
     def _draw_header_footer(self, canvas, doc):
         """Draw a colored header banner with name/subtitle and a light footer with page info."""
@@ -265,6 +296,8 @@ class CypherCharacterSheetPDF:
 
         # Move into the main two-column body area.
         self.story.append(FrameBreak())
+        # Ensure subsequent pages use the two-column template (no top frame).
+        self.story.append(NextPageTemplate("rest"))
 
         # LEFT COLUMN (body): Attributes, Recovery/Damage, then Abilities + Attacks
         self._add_attributes_section()
@@ -552,6 +585,12 @@ class CypherCharacterSheetPDF:
 
         self.story.append(Paragraph("SKILLS", self.styles["SectionHeader"]))
 
+        # Compact legend panel explaining skill levels; sized to right column width
+        legend = self._get_skills_legend_panel()
+        if legend is not None:
+            self.story.append(legend)
+            self.story.append(Spacer(1, 0.04 * inch))
+
         for skill in self.data["skills"]:
             skill_level = skill.get("level", "")
             desc = " ".join(skill.get("description", []))
@@ -566,6 +605,73 @@ class CypherCharacterSheetPDF:
                 )
             )
         self.story.append(Spacer(1, 0.06 * inch))
+
+    def _get_skills_legend_panel(self):
+        """Return a compact two-column legend panel for skill levels.
+        Layout:
+          Left:  Inability = hinder 1;  Practiced = 0
+          Right: Trained = ease 1;     Specialized = ease 2
+        """
+        # Compute the right column width; legend is intended for the right column
+        avail_width = self.page_width - (2 * self.margin)
+        gutter = 0.18 * inch
+        col1_width = avail_width * 0.6
+        col2_width = avail_width - gutter - col1_width
+
+        style = self.styles.get("Normal2", self.styles["Normal"])
+
+        left_col = Table(
+            [
+                [Paragraph("Inability = hinder 1", style)],
+                [Paragraph("Practiced = 0", style)],
+            ],
+            colWidths=[(col2_width / 2.0) - 6],
+        )
+        left_col.setStyle(
+            TableStyle(
+                [
+                    ("LEFTPADDING", (0, 0), (-1, -1), 3),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 3),
+                    ("TOPPADDING", (0, 0), (-1, -1), 1),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
+                ]
+            )
+        )
+
+        right_col = Table(
+            [
+                [Paragraph("Trained = ease 1", style)],
+                [Paragraph("Specialized = ease 2", style)],
+            ],
+            colWidths=[(col2_width / 2.0) - 6],
+        )
+        right_col.setStyle(
+            TableStyle(
+                [
+                    ("LEFTPADDING", (0, 0), (-1, -1), 3),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 3),
+                    ("TOPPADDING", (0, 0), (-1, -1), 1),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
+                ]
+            )
+        )
+
+        panel = Table(
+            [[left_col, right_col]], colWidths=[col2_width / 2.0, col2_width / 2.0]
+        )
+        panel.setStyle(
+            TableStyle(
+                [
+                    ("BOX", (0, 0), (-1, -1), 0.6, self.colors["primary"]),
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 2),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+                ]
+            )
+        )
+        return panel
 
     def _add_attacks(self):
         """Add attacks section."""
