@@ -355,18 +355,44 @@ class CharacterSheetParser:
         content = self._get_section_content("Attacks")
         attack = None
 
+        def looks_like_attack_header(s: str) -> bool:
+            if not s:
+                return False
+            t = s.strip()
+            if not t:
+                return False
+            # Reject lines that end with sentence punctuation or colon
+            if t.endswith((".", "!", "?", ":")):
+                return False
+            # Avoid list bullets or dashes
+            if t.startswith(("- ", "• ")):
+                return False
+            # Length heuristic
+            if len(t) > 60:
+                return False
+            # Must contain at least one alpha
+            if not re.search(r"[A-Za-z]", t):
+                return False
+            # Allow common name punctuation: ampersand, hyphen, apostrophe, slash, plus, digits
+            # Disallow trailing commas
+            if t.endswith(","):
+                return False
+            return re.match(r"^[A-Za-z0-9][A-Za-z0-9\s&'\-\+/\/]*$", t) is not None
+
         for line in content:
-            # Attack names are short lines without leading whitespace
-            if line and not line.startswith("\t") and line.strip():
-                match = re.match(r"^([A-Za-z\s]+)$", line.strip())
-                if match and len(line.strip()) < 50:
+            raw = line
+            if raw is None:
+                continue
+            # Attack names are non-indented lines
+            if raw and not raw.startswith("\t") and raw.strip():
+                if looks_like_attack_header(raw):
                     if attack:
                         self.data["attacks"].append(attack)
-                    attack = {"name": line.strip(), "description": []}
+                    attack = {"name": raw.strip(), "description": []}
                 elif attack:
-                    attack["description"].append(line.strip())
-            elif attack and line.strip():
-                attack["description"].append(line.strip())
+                    attack["description"].append(raw.strip())
+            elif attack and raw.strip():
+                attack["description"].append(raw.strip())
 
         if attack:
             self.data["attacks"].append(attack)
@@ -378,16 +404,20 @@ class CharacterSheetParser:
 
         for line in content:
             # Cypher names: "Name (Level X, Type)"
+            # Allow extra tags in the name before the (Level ..., Type) tail, e.g.:
+            #   "Effort Enhancer (Combat) (Level 4, Subtle)"
+            # Capture everything before the Level group as the name, trimmed.
             match = re.match(
-                r"^([A-Za-z\s]+)\s+\(Level\s+(\d+),\s+(.+?)\)\s*$", line.strip()
+                r"^(?P<name>.+?)\s*\(Level\s+(?P<level>\d+),\s*(?P<type>[^\)]+)\)\s*$",
+                line.strip(),
             )
             if match:
                 if cypher:
                     self.data["cyphers"].append(cypher)
                 cypher = {
-                    "name": match.group(1).strip(),
-                    "level": int(match.group(2)),
-                    "type": match.group(3),
+                    "name": match.group("name").strip(),
+                    "level": int(match.group("level")),
+                    "type": match.group("type").strip(),
                     "description": [],
                 }
             elif cypher and line.strip():

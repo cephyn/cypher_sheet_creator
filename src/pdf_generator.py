@@ -101,6 +101,9 @@ class CypherCharacterSheetPDF:
                 rightIndent=3,
                 topPadding=2,
                 bottomPadding=2,
+                # Ensure a section header is never the last line of a column
+                # by keeping it with the next flowable (e.g., legend, first item).
+                keepWithNext=True,
             )
         )
 
@@ -113,6 +116,9 @@ class CypherCharacterSheetPDF:
                 spaceAfter=2,
                 leading=10,
                 fontName="Helvetica-Bold",
+                # Keep subsection headers with the next flowable so they
+                # don't end a column on their own.
+                keepWithNext=True,
             )
         )
 
@@ -136,6 +142,7 @@ class CypherCharacterSheetPDF:
                 fontName="Helvetica-Bold",
                 spaceBefore=0,
                 spaceAfter=2,
+                keepWithNext=True,
             )
         )
         # Notes header even lighter (non-bold) for compact look
@@ -149,6 +156,7 @@ class CypherCharacterSheetPDF:
                 fontName="Helvetica",
                 spaceBefore=0,
                 spaceAfter=1,
+                keepWithNext=True,
             )
         )
 
@@ -573,13 +581,13 @@ class CypherCharacterSheetPDF:
         self.story.append(Paragraph("SPECIAL ABILITIES", self.styles["SectionHeader"]))
 
         for ability in self.data["special_abilities"]:
-            self.story.append(
-                Paragraph(ability["name"], self.styles["SubsectionHeader"])
-            )
+            # Keep the subheader and its first body paragraph together
+            header_para = Paragraph(ability["name"], self.styles["SubsectionHeader"])
             desc = " ".join(ability["description"])
-            self.story.append(
-                Paragraph(desc, self.styles.get("Normal2", self.styles["Normal"]))
+            body_para = Paragraph(
+                desc, self.styles.get("Normal2", self.styles["Normal"])
             )
+            self.story.append(KeepTogether([header_para, body_para]))
             self.story.append(Spacer(1, 0.06 * inch))
 
     def _add_skills(self):
@@ -685,13 +693,12 @@ class CypherCharacterSheetPDF:
         self.story.append(Paragraph("ATTACKS", self.styles["SectionHeader"]))
 
         for attack in self.data["attacks"]:
-            self.story.append(
-                Paragraph(attack["name"], self.styles["SubsectionHeader"])
-            )
+            header_para = Paragraph(attack["name"], self.styles["SubsectionHeader"])
             desc = " ".join(attack["description"])
-            self.story.append(
-                Paragraph(desc, self.styles.get("Normal2", self.styles["Normal"]))
+            body_para = Paragraph(
+                desc, self.styles.get("Normal2", self.styles["Normal"])
             )
+            self.story.append(KeepTogether([header_para, body_para]))
             self.story.append(Spacer(1, 0.06 * inch))
 
     def _add_cyphers(self):
@@ -699,18 +706,31 @@ class CypherCharacterSheetPDF:
         if not self.data["cyphers"]:
             return
 
-        self.story.append(Paragraph("CYPHERS", self.styles["SectionHeader"]))
-
+        # Build all cypher entry blocks first so we can ensure the section header
+        # is kept with the first entry across frame/column breaks.
+        entry_blocks: List[Any] = []
         for cypher in self.data["cyphers"]:
             cypher_header = (
                 f"{cypher['name']} (Level {cypher['level']}, {cypher['type']})"
             )
-            self.story.append(Paragraph(cypher_header, self.styles["SubsectionHeader"]))
-            desc = " ".join(cypher["description"])
-            self.story.append(
-                Paragraph(desc, self.styles.get("Normal2", self.styles["Normal"]))
+            header_para = Paragraph(cypher_header, self.styles["SubsectionHeader"])
+            desc = " ".join(cypher.get("description", []))
+            body_para = Paragraph(
+                desc, self.styles.get("Normal2", self.styles["Normal"])
             )
-            self.story.append(Spacer(1, 0.08 * inch))
+            entry_blocks.append(KeepTogether([header_para, body_para]))
+            entry_blocks.append(Spacer(1, 0.08 * inch))
+
+        # Add the section header, kept together with the first entry if present.
+        section_header = Paragraph("CYPHERS", self.styles["SectionHeader"])
+        if entry_blocks:
+            first_block = entry_blocks[0]
+            self.story.append(KeepTogether([section_header, first_block]))
+            # Then append the remainder
+            for blk in entry_blocks[1:]:
+                self.story.append(blk)
+        else:
+            self.story.append(section_header)
 
     def _add_equipment(self):
         """Add equipment section."""
@@ -731,25 +751,45 @@ class CypherCharacterSheetPDF:
         """Add background section on second page."""
         if not self.data["background"]:
             return
-        self.story.append(Paragraph("BACKGROUND", self.styles["SectionHeader"]))
-
+        # Build background subsection blocks so we can keep the section header
+        # with the first subsection across frames/columns.
+        subsection_blocks: List[Any] = []
         # Render each background subsection like a special ability: bold
         # subsection header then a compact paragraph body (no bullets).
         for subsection, content in self.data["background"].items():
-            if subsection.strip():
-                self.story.append(
-                    Paragraph(subsection, self.styles["SubsectionHeader"])
-                )
-            # content is a list of paragraph strings
-            for para in content:
+            first_body_added = False
+            header_para = (
+                Paragraph(subsection, self.styles["SubsectionHeader"])
+                if subsection.strip()
+                else None
+            )
+            local_block: List[Any] = []
+            # content is a list of paragraph strings; keep header with the first paragraph only
+            for idx, para in enumerate(content):
                 if para and para.strip():
-                    self.story.append(
-                        Paragraph(
-                            para, self.styles.get("Normal2", self.styles["Normal"])
-                        )
+                    body_para = Paragraph(
+                        para, self.styles.get("Normal2", self.styles["Normal"])
                     )
+                    if not first_body_added:
+                        if header_para is not None:
+                            local_block.append(KeepTogether([header_para, body_para]))
+                        else:
+                            local_block.append(body_para)
+                        first_body_added = True
+                    else:
+                        local_block.append(body_para)
             # small spacer to separate subsections
-            self.story.append(Spacer(1, 0.04 * inch))
+            local_block.append(Spacer(1, 0.04 * inch))
+            subsection_blocks.extend(local_block)
+
+        section_header = Paragraph("BACKGROUND", self.styles["SectionHeader"])
+        if subsection_blocks:
+            # Keep BACKGROUND header with the first subsection block
+            self.story.append(KeepTogether([section_header, subsection_blocks[0]]))
+            for blk in subsection_blocks[1:]:
+                self.story.append(blk)
+        else:
+            self.story.append(section_header)
 
     def _add_notes(self):
         """Add notes section."""
@@ -761,17 +801,24 @@ class CypherCharacterSheetPDF:
         # Render notes similar to abilities/cyphers: subsection title in bold
         # style then a compact paragraph block. Avoid per-line bullets.
         for subsection, content in self.data["notes"].items():
+            first_body_added = False
             if subsection.strip():
-                self.story.append(
-                    Paragraph(subsection, self.styles["SubsectionHeader"])
-                )
-            for para in content:
+                header_para = Paragraph(subsection, self.styles["SubsectionHeader"])
+            else:
+                header_para = None
+            for idx, para in enumerate(content):
                 if para and para.strip():
-                    self.story.append(
-                        Paragraph(
-                            para, self.styles.get("Normal2", self.styles["Normal"])
-                        )
+                    body_para = Paragraph(
+                        para, self.styles.get("Normal2", self.styles["Normal"])
                     )
+                    if not first_body_added:
+                        if header_para is not None:
+                            self.story.append(KeepTogether([header_para, body_para]))
+                        else:
+                            self.story.append(body_para)
+                        first_body_added = True
+                    else:
+                        self.story.append(body_para)
             self.story.append(Spacer(1, 0.04 * inch))
 
     def _get_recovery_and_damage_panel(self):
