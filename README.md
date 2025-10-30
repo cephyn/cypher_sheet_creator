@@ -43,7 +43,35 @@ pip install -r requirements.txt
 python main.py
 ```
 
-This will process all `.txt` files in the `examples/` directory and generate corresponding PDFs in the `output/` directory.
+This processes all `.txt` files in the `examples/` directory and writes PDFs to `output/`.
+
+### Choose a different input/output
+
+You can point the tool at any folder of `.txt` files, or a single `.txt` file, and choose a custom output directory:
+
+```bash
+# Directory of sheets
+python main.py --input /path/to/my_sheets
+
+# Single file
+python main.py --input /path/to/my_sheets/character.txt
+
+# Custom output directory
+python main.py --input /path/to/my_sheets --output /path/to/exports
+
+# Optional pattern when input is a directory
+python main.py --input /path/to/my_sheets --pattern "*_final.txt"
+
+### Debug mode (optional)
+
+By default, no debug assets are produced. To create PNG previews and whitespace metrics for layout tuning, enable debug mode:
+
+```bash
+python main.py --debug
+```
+
+When debug is enabled, PNGs are written to `<output>/png_debug/` and temporary PDFs to `<output>/_debug_pdf/`.
+```
 
 ### Layout notes
 

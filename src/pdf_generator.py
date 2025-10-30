@@ -751,11 +751,12 @@ class CypherCharacterSheetPDF:
         """Add background section on second page."""
         if not self.data["background"]:
             return
-        # Build background subsection blocks so we can keep the section header
-        # with the first subsection across frames/columns.
-        subsection_blocks: List[Any] = []
+
+        section_header = Paragraph("BACKGROUND", self.styles["SectionHeader"])
+
         # Render each background subsection like a special ability: bold
         # subsection header then a compact paragraph body (no bullets).
+        first_item = True
         for subsection, content in self.data["background"].items():
             first_body_added = False
             header_para = (
@@ -763,7 +764,6 @@ class CypherCharacterSheetPDF:
                 if subsection.strip()
                 else None
             )
-            local_block: List[Any] = []
             # content is a list of paragraph strings; keep header with the first paragraph only
             for idx, para in enumerate(content):
                 if para and para.strip():
@@ -772,23 +772,35 @@ class CypherCharacterSheetPDF:
                     )
                     if not first_body_added:
                         if header_para is not None:
-                            local_block.append(KeepTogether([header_para, body_para]))
+                            # For the very first subsection, keep BACKGROUND header with the subsection header and first para
+                            if first_item:
+                                self.story.append(
+                                    KeepTogether(
+                                        [section_header, header_para, body_para]
+                                    )
+                                )
+                                first_item = False
+                            else:
+                                self.story.append(
+                                    KeepTogether([header_para, body_para])
+                                )
                         else:
-                            local_block.append(body_para)
+                            # No subsection header, just the paragraph
+                            if first_item:
+                                self.story.append(
+                                    KeepTogether([section_header, body_para])
+                                )
+                                first_item = False
+                            else:
+                                self.story.append(body_para)
                         first_body_added = True
                     else:
-                        local_block.append(body_para)
+                        self.story.append(body_para)
             # small spacer to separate subsections
-            local_block.append(Spacer(1, 0.04 * inch))
-            subsection_blocks.extend(local_block)
+            self.story.append(Spacer(1, 0.04 * inch))
 
-        section_header = Paragraph("BACKGROUND", self.styles["SectionHeader"])
-        if subsection_blocks:
-            # Keep BACKGROUND header with the first subsection block
-            self.story.append(KeepTogether([section_header, subsection_blocks[0]]))
-            for blk in subsection_blocks[1:]:
-                self.story.append(blk)
-        else:
+        # If no content was added (e.g., empty background), just add the header
+        if first_item:
             self.story.append(section_header)
 
     def _add_notes(self):

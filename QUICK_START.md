@@ -26,6 +26,32 @@ python main.py
 
 All character sheets in the `examples/` directory will be processed and PDFs will be generated in the `output/` directory.
 
+### Process a different folder or a single file
+
+You can point the tool at any folder of `.txt` files (or a single `.txt` file):
+
+```powershell
+# Folder of .txt files
+python main.py --input "C:\path\to\my_sheets"
+
+# Single file
+python main.py --input "C:\path\to\my_sheets\my_character.txt"
+
+# Custom output directory
+python main.py --input "C:\path\to\my_sheets" --output "C:\path\to\exports"
+
+# Use a custom file pattern (when input is a directory)
+python main.py --input "C:\path\to\my_sheets" --pattern "*_final.txt"
+
+# Enable debug previews (PNG) and whitespace metrics
+python main.py --input "C:\path\to\my_sheets" --debug
+```
+
+Notes:
+- Defaults remain `--input examples` and `--output output`.
+- Debug is OFF by default. Use `--debug` to generate PNG previews and whitespace metrics.
+- With `--debug`, PNGs go to `<output>/png_debug/` and intermediate PDFs to `<output>/_debug_pdf/`.
+
 ## Adding New Character Sheets
 
 1. Place your formatted text file in the `examples/` directory
